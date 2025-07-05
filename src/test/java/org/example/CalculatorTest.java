@@ -1,14 +1,36 @@
 package org.example;
 
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class CalculatorTest {
+    Calculator calculator;
 
+    @BeforeAll
+    static void setup(){
+        System.out.println("Executing @BeforeAll method");
+    }
+
+    @AfterAll
+    static void cleanup(){
+        System.out.println("Executing @AfterAll method");
+    }
+
+    @BeforeEach
+    void beforeEachTestMethod(){
+        calculator = new Calculator();
+        System.out.println("Executing @BeforeEach method");
+    }
+
+    @AfterEach
+    void afterEachTestMethod(){
+        System.out.println("Executing @AfterEach method");
+
+    }
 
 //    test<system under Test>_<Condition pr State Change>_<Expected Result>
     @DisplayName("Test 4/2 = 2")
@@ -19,10 +41,21 @@ public class CalculatorTest {
         assertEquals(2, division,"4/2 did, it should produce 2");
     }
 
+//    @Disabled("ToDO: Still need to work on it")
     @DisplayName("Division by zero")
     @Test
     void testIntegerDivision_WhenDividedIsDividedByZero_ShouldThrowArithematicException(){
+        System.out.println("Running Division By zero");
 
+        int dividend = 4;
+        int divisor=0;
+        String expectedExceptionMessage= "/ by zero";
+
+        Exception actualException = assertThrows(ArithmeticException.class, ()->{
+            calculator.integerDivision(dividend,divisor);
+        },"Divided by zero should have thrown an Arithmetic exception.");
+
+        assertEquals(expectedExceptionMessage,actualException.getMessage(),"Unexpected exception message");
 
     }
 
