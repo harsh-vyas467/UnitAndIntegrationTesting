@@ -4,6 +4,7 @@ package org.example;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -66,7 +67,12 @@ public class CalculatorTest {
 
     @DisplayName("Test integer subtraction [a,b,expectedResult]")
     @ParameterizedTest
-    @MethodSource
+//    @MethodSource()
+    @CsvSource({
+            "33,1,32",
+            "24,3,21",
+            "54,3,51"
+    })
     void integerSubtraction(int a,int b,int expectedResult){
         Calculator calculator = new Calculator();
         int subtraction = calculator.integerSubtraction(a,b);
@@ -74,14 +80,14 @@ public class CalculatorTest {
 
     }
 
-    private static Stream<Arguments> integerSubtraction(){
-        return Stream.of(
-                Arguments.of(33,1,32),
-                Arguments.of(24,1,23),
-                Arguments.of(3,5,-2)
-        );
-
-    }
+//    private static Stream<Arguments> integerSubtraction(){
+//        return Stream.of(
+//                Arguments.of(33,1,32),
+//                Arguments.of(24,1,23),
+//                Arguments.of(3,5,-2)
+//        );
+//
+//    }
 
 
 
