@@ -2,6 +2,11 @@ package org.example;
 
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,13 +64,22 @@ public class CalculatorTest {
 
     }
 
-    @DisplayName("Test 5-2=3")
-    @Test
-    void integerSubtraction(){
+    @DisplayName("Test integer subtraction [a,b,expectedResult]")
+    @ParameterizedTest
+    @MethodSource
+    void integerSubtraction(int a,int b,int expectedResult){
         Calculator calculator = new Calculator();
-        int a=5,b=2,c=3;
         int subtraction = calculator.integerSubtraction(a,b);
-        assertEquals(3,subtraction,()-> a+" - "+b+ " did not produce "+c);
+        assertEquals(expectedResult,subtraction,()-> a+" - "+b+ " did not produce "+subtraction);
+
+    }
+
+    private static Stream<Arguments> integerSubtraction(){
+        return Stream.of(
+                Arguments.of(33,1,32),
+                Arguments.of(24,1,23),
+                Arguments.of(3,5,-2)
+        );
 
     }
 
